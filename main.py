@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Body
-from mockData import products
+# Routes
+from src.routes.productRoute import product_router
 
 app = FastAPI()
 
@@ -36,16 +37,20 @@ app = FastAPI()
 
 # ===== working with products =====
 
-@app.get("/products")
-def get_products():
-    return products
+# @app.get("/products")
+# def get_products():
+#     return products
 
-# path param
-@app.get("/products/{product_id}")
-def get_one_product(product_id: int):
+# # path param
+# @app.get("/products/{product_id}")
+# def get_one_product(product_id: int):
 
-    for one_product in products:
-        if one_product.get("id") == product_id:
-            return one_product
+#     for one_product in products:
+#         if one_product.get("id") == product_id:
+#             return one_product
 
-    return{"message": "Product not found"}
+#     return{"message": "Product not found"}
+
+
+# Crud operations json file
+app.include_router(product_router, prefix="/products")
