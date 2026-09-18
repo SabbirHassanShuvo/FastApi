@@ -1,8 +1,19 @@
+import json
+from pathlib import Path
 from fastapi import FastAPI, Body
-# Routes
-from src.routes.productRoute import product_router
 
 app = FastAPI()
+
+# -------------------------------------------------------------
+# প্রজেক্ট ডিরেক্টরি থেকে ডাটা ফাইল লোড করার সহজ নিয়ম:
+# Path(__file__).resolve().parent দিলে main.py যে ফোল্ডারে আছে সেই পাথ নিশ্চিত করে
+# -------------------------------------------------------------
+BASE_DIR = Path(__file__).resolve().parent
+PRODUCTS_FILE = BASE_DIR / "src" / "data" / "products.json"
+
+# JSON ফাইলটি ওপেন করে পাইথন লিস্টে লোড করা হচ্ছে
+with open(PRODUCTS_FILE, "r", encoding="utf-8") as file:
+    products = json.load(file)
 
 Toods =[
     {"title": "Learn FastAPI", "description": "Learn how to build APIs with FastAPI", "done": False},
@@ -52,18 +63,4 @@ def get_one_product(product_id: int):
     return{"message": "Product not found"}
 
 
-# different type of http methods
 
-
-
-
-
-
-
-
-
-
-
-
-# Crud operations json file
-# app.include_router(product_router, prefix="/products")
